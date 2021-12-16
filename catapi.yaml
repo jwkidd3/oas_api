@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  description: This is a simple Cat Information Center Api
+  version: 1.0.0
+  title: OpenAPI Cat Information Service
+  contact:
+    name: bubba
+    url: localhost/test
+servers:
+  - url: "http://localhost:8080"
+    description: "Local server"
+  - url: "https://localhost:8443"
+    description: "Local server2"    
+tags:
+  - name: cat
+    description: all about cats
+paths:
+  /cats:
+      get:
+        tags:
+         - cat
+        summary: retrieves list of all cats
+        description: retrieves a ton of cats
+        operationId: listCats
+        responses:
+          '200':
+            description: Success!!
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/CatsResponse'
+components:
+  schemas:
+    CatsResponse:
+      type: object
+      description: response of all cats
+      properties:
+        cats:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cat'
+          description: List of cats
+    Cat:
+      title: Cat
+      description: A cat
+      required:
+        - name
+        - breed
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: Name of the cat
+          example: Garfield
+        breed:
+          type: string
+          description: Breed of the cat
+          enum:
+            - Abyssinian
+            - Aegean
+            - American Bobtail
+            - American Curl

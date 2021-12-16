@@ -1,0 +1,47 @@
+openapi: 3.0.3
+info:
+  description: "API Spec about dogs because they are better."
+  version: "1.0.0"
+  title: "Dog Store"
+  contact:
+    name: "Dog Store"
+    url: "https://www.dogstore.com"
+servers:
+  - url: "http://localhost:8080"
+    description: "Local server"
+  - url: "https://localhost:8443"
+    description: "Local server2"
+tags:
+  - name: "dogs"
+    description: "Endpoints related to dogs"
+paths:
+  /dogs:
+    get:
+      summary: "Get all dogs"
+      operationId: "getDogs"
+      description: "Gets all dogs currently in the store."
+      tags:
+        - "dogs"
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getDogs"
+          
+components:
+ schemas:
+  getDogs:
+    type: "array"
+    items:
+      $ref: "#/components/schemas/dog"
+  
+  dog:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
