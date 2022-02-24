@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+  title: OrdersAPi_V1
+  version: '1.0'
+  description: Orders sample APIs
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /v1/orders:
+    parameters: []
+    get:
+      summary: Get User Info by User ID
+      tags: []
+      responses:
+        '200':
+          description: Orders Returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+              examples:
+                Get User Alice Smith:
+                  value:
+                    - id: 2108
+                      orderDescription: Elecrtronics
+                      customerName: Jon Doe
+                      customerEmail: jondoe@email.com
+                      dateOfBirth: 21/02/1988
+                      emailVerified: true
+                      customerId: cust123
+                    - id: 2109
+                      orderDescription: Elecrtronics
+                      customerName: Jon Doe
+                      customerEmail: jondoe@email.com
+                      dateOfBirth: 21/02/1988
+                      emailVerified: true
+                      customerId: cust1234
+        '404':
+          description: User Not Found
+      operationId: getAllOrders
+      description: Get All Orders
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Accept
+    post:
+      summary: ''
+      operationId: post-v1-orders
+      responses:
+        '201':
+          description: Created
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+            examples:
+              SampleOrder:
+                value:
+                  id: 2109
+                  orderDescription: Elecrtronics
+                  customerName: Jon Doe
+                  customerEmail: jondoe@email.com
+                  dateOfBirth: 21/02/1988
+                  emailVerified: true
+                  customerId: cust123
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+  '/v1/prders/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: OrderId
+    get:
+      summary: GetOrderByOrderId
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      operationId: get-v1-prders-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+            examples:
+              SampleOrder:
+                value:
+                  id: 2109
+                  orderDescription: Elecrtronics
+                  customerName: Jon Doe
+                  customerEmail: jondoe@email.com
+                  dateOfBirth: 21/02/1988
+                  emailVerified: true
+                  customerId: cust123
+components:
+  schemas:
+    Order:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: number
+        orderDescription:
+          type: string
+          minLength: 1
+        customerName:
+          type: string
+          minLength: 1
+        customerEmail:
+          type: string
+          minLength: 1
+        dateOfBirth:
+          type: string
+          minLength: 1
+        emailVerified:
+          type: boolean
+        customerId:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - orderDescription
+        - customerName
+        - customerEmail
+        - dateOfBirth
+        - emailVerified
+        - customerId
+      x-examples:
+        SampleOrder:
+          id: 1
+          orderDescription: Electronics
+          customerName: Jon Doe
+          customerEmail: user@example.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          customerId: customer123
